@@ -2,7 +2,7 @@
 .ÖZET
 Gelişmiş Bakım, Optimizasyon ve Onarım Aracı V-01
 Seçkin Akay tarafından düzenlendi ve güncellendi | Güncelleme: 2026-09-26
-Kaynaklar - Açık kaynak geliştiricisi Steve projelerinden ve Gemini ai sohbet ajanlarından yararlanıldı.
+Kaynaklar - Açık kaynak geliştiricisi Steve projelerinden ve Google Gemini sohbet ajanlarından yararlanıldı.
 .AÇIKLAMA
 MSP saha ve uzaktan kullanımına yönelik, otomatik Windows 10/11 disk alanı geri kazanımı ve bütünlük onarımı aracı. 
 Dell SupportAssist anlık görüntülerini (snapshots), tarayıcı, Office ve GPU önbelleklerini, Geri Dönüşüm Kutusu'nu, 
