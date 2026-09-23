@@ -19,3 +19,5 @@ Yalnızca temizlik ve onarım işlemlerini kapsar; canlı ve yönetilen uç nokt
 Salt okunur tahmin modu. Herhangi bir değişiklik yapmaz; yıkıcı nitelikteki tüm adımlar atlanır
 ve bunun yerine her bir hedef için boyutlandırma yapılarak, kategori bazında geri kazanılacak
 tahmini alan miktarı ile öngörülen toplam boş alan bilgisi raporlanır. Disk uyarısı üzerine işlem yapmadan önce kullanın.
+OFLINE ÇALIŞTIRMAK İÇİN
+akay.txt dosyasını .bat uzantısı ile kaydedin ve akay01.ps1 dosyası ile aynı dizinde yada sürücüde olaması yeterlidir çalışacaktır.
