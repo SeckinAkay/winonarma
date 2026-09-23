@@ -1,8 +1,11 @@
-﻿<#
+<#
 .ÖZET
 Gelişmiş Bakım, Optimizasyon ve Onarım Aracı V-01
-Seçkin Akay tarafından düzenlendi ve güncellendi | Güncelleme: 2026-09-26
-Kaynaklar - Açık kaynak geliştiricisi Steve projelerinden ve Google Gemini sohbet ajanlarından yararlanıldı.
+Seçkin Akay tarafından düzenlendi ve güncellendi | Güncelleme: 23/09/2026
+https://akayseckin.blogspot.com/
+https://github.com/SeckinAkay
+https://www.youtube.com/@akayseckin
+Kaynaklar - Açık kaynak geliştiricisi Steve projelerinden ve Google Geminisohbet ajanlarından yararlanıldı.
 .AÇIKLAMA
 MSP saha ve uzaktan kullanımına yönelik, otomatik Windows 10/11 disk alanı geri kazanımı ve bütünlük onarımı aracı. 
 Dell SupportAssist anlık görüntülerini (snapshots), tarayıcı, Office ve GPU önbelleklerini, Geri Dönüşüm Kutusu'nu, 
@@ -13,7 +16,7 @@ ayrıca SSD TRIM işlemini uygularken her aşamada geri kazanılan disk alanı m
 V-01 kapsam değişikliği: gizlilik/telemetri sıkılaştırma (eski Bölge 1), tarayıcı sıkılaştırma/uBlock
 (eski Bölge 2) ve OEM/yazılım gereksiz bileşen temizliği (eski Bölge 3) kapsamdan çıkarıldı. 
 Yalnızca temizlik ve onarım işlemlerini kapsar; canlı ve yönetilen uç noktalarda çalıştırılması güvenlidir.
-.PARAMETER DryRun
+.PARAMETRE Kuru Çalıştırma
 Salt okunur tahmin modu. Herhangi bir değişiklik yapmaz; yıkıcı nitelikteki tüm adımlar atlanır
 ve bunun yerine her bir hedef için boyutlandırma yapılarak, kategori bazında geri kazanılacak
 tahmini alan miktarı ile öngörülen toplam boş alan bilgisi raporlanır. Disk uyarısı üzerine işlem yapmadan önce kullanın.
@@ -27,7 +30,7 @@ $_fver   = "| V-01"
 $OutputEncoding            = [System.Text.Encoding]::UTF8
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Warning "Elevation Required: Please run as Administrator."
+    Write-Warning "Yükseltilmiş Yetki Gerekiyor: Lütfen Yönetici olarak çalıştırın.."
     Exit
 }
 # Etkin Windows hizmet işlemini algıla - sonlandırma.
@@ -35,7 +38,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 # bu durumda onarım bölgesinin onarım yapması gerekirdi. Bunun yerine, onarım gerekliliğini tespit edip işlemi atlıyoruz.
 $ServicingActive = $null -ne (Get-Process -Name "TiWorker", "DISM" -ErrorAction SilentlyContinue)
 if ($ServicingActive) {
-    Write-Host "[Pre-Flight] Windows servicing active (TiWorker/DISM running). Repair steps will be skipped." -ForegroundColor Yellow
+    Write-Host "[Pre-Flight] Windows bakım işlemi etkin (TiWorker/DISM çalışıyor). Onarım adımları atlanacak." -ForegroundColor Yellow
 }
 
 # WMI/CIM geçişini yönetmeye yardımcı
@@ -167,7 +170,7 @@ $script:EstYieldBytes = 0
 # TotalSize'ın geçerli olduğundan emin olun
 $TotalSize = [double]$TotalSize
 $script:RegionHistory = @()
-if ($TotalSize -le 0) { throw "TotalSize is zero or undefined. Aborting." }
+if ($TotalSize -le 0) { throw "Toplam boyut sıfır veya tanımlanmamış. İşlem durduruluyor." }
 
 $StartUsagePct = [Math]::Round(((($TotalSize - $StartSpace) / $TotalSize) * 100), 2)
 $LastRegionSpace = $Drive.FreeSpace # Adım adım raporlama için kayan referans noktası
@@ -248,7 +251,7 @@ $_art3 = "╩ ╩ ╩ ╩ ╩ ╩  ╩  "
 $_artW = [Math]::Max($_art1.Length, [Math]::Max($_art2.Length, $_art3.Length))
 $_art1 = $_art1.PadRight($_artW); $_art2 = $_art2.PadRight($_artW); $_art3 = $_art3.PadRight($_artW)
 $_fillW = $script:Width - $_pfx.Length - $_artW
-$_title = "Akay Bilgisayar - Gelişmiş Bakım, Optimizasyon ve Onarım Aracı"
+$_title = "Seçkin Akay - Gelişmiş Bakım, Optimizasyon ve Onarım Aracı"
 
 Write-Host $_pfx -ForegroundColor $LineCol -NoNewline; Write-Host $_art1 -ForegroundColor $ArtCol -NoNewline; Write-Host ("-" * $_fillW) -ForegroundColor $LineCol
 Write-Host $_pfx -ForegroundColor $LineCol -NoNewline; Write-Host $_art2 -ForegroundColor $ArtCol -NoNewline; Write-Host "$_title" -ForegroundColor $MainCol
@@ -656,7 +659,7 @@ if (-not $SkipRepair) {
     }
 # --- ADIM 5: RestoreHealth ---
             Clear-InputBuffer
-            $S72 = "[05/08] DISM Sağlığı Geri Yükle..."
+            $S72 = "[05/08] DISM Sağlığı Düzeltiliyor..."
             Write-StepUpdate $S72 -CustomInfo "[ESC İLE ÇIKIŞ]"
             $Row72 = try { [Console]::CursorTop - 1 } catch { -1 }
 
@@ -812,7 +815,7 @@ if (-not $SkipRepair) {
             }
 
 # --- ADIM 7: SFC /scannow ---
-            $S74 = "[07/08] SFC /scannow..."
+            $S74 = "[07/08] SFC /Taramaları..."
             Write-StepUpdate $S74 -CustomInfo "[ESC İLE ÇIKIŞ]"
             $Row74 = try { [Console]::CursorTop - 1 } catch { -1 }
 
@@ -915,7 +918,7 @@ if ($DryRun) {
 # Disk bilgilerinin ve toplam boyutun geçerli olduğundan emin olun.
 $FinalDrive = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'"
 $TotalSize = [double]$TotalSize
-if ($TotalSize -le 0) { throw "TotalSize is zero or undefined. Aborting final summary." }
+if ($TotalSize -le 0) { throw "TotalSize sıfır veya tanımlanmamış. Nihai özet iptal ediliyor." }
 
 if (-not $script:TotalYieldBytes) { $script:TotalYieldBytes = 0 }
 $script:TotalYieldBytes = [int64]$script:TotalYieldBytes
@@ -952,7 +955,7 @@ if ($DryRun) {
 # Footer
 $_sfx   = "█"
 $_ffillW = $script:Width - $_artW - 1 - $_sfx.Length
-$_footer = if ($DryRun) { "  DRY RUN COMPLETE" } else { "  BAKIM TAMAMLANDI" }
+$_footer = if ($DryRun) { "  PROVA TAMAMLANDI" } else { "  BAKIM TAMAMLANDI" }
 $_fpad   = " " * [Math]::Max(0, ($_ffillW - $_footer.Length - $_fver.Length))
 
 Write-Host ("-" * $_ffillW) -ForegroundColor $LineCol -NoNewline; Write-Host " $_art1" -ForegroundColor $ArtCol -NoNewline; Write-Host $_sfx -ForegroundColor $LineCol
