@@ -1,0 +1,16 @@
+Yönetici olarak açtığınız powershell ekranına aşağıdaki linklerden birini kopyalayıp yapıştırınız.
+
+Link 1 :
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; $web = New-Object System.Net.WebClient; $web.Encoding = [System.Text.Encoding]::UTF8; $kod = $web.DownloadString('https://raw.githubusercontent.com/SeckinAkay/winonarma/refs/heads/main/akay01.ps1'); Invoke-Expression $kod
+
+Link 2 :
+
+irm "https://raw.githubusercontent.com/SeckinAkay/winonarma/refs/heads/main/akay01.ps1" | iex
+
+Link 3 :
+
+irm "https://raw.githubusercontent.com/SeckinAkay/winonarma/refs/heads/main/akay01.ps1" | iex; Invoke-CommandInProcess { & $StageSub -DryRun }
+
+
+
